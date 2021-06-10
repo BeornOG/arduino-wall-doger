@@ -1,20 +1,20 @@
 // speed settings
 const int turn_speed_fwd =255;
-const int turn_speed_bwd =100;
+const int turn_speed_bwd =250;
 const int roam_speed =150;
 
 // hardware links
-const int L_fwd =9;
-const int L_bwd =10;
-const int R_fwd =5;
-const int R_bwd =6;
+const int L_fwd =10;
+const int L_bwd =11;
+const int R_fwd =8;
+const int R_bwd =9;
 const int LED =13;
 const int afstand_echo =2;
 const int afstand_trig =3;
 
 // other settings
 const int serial_speed =9600;
-const int detection_distance =50;
+const int detection_distance =10;
 
 
 
@@ -24,9 +24,9 @@ const int detection_distance =50;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  
-  pinMode(L_fwd, OUTPUT);
+  Serial.begin(serial_speed); // initaliseer de communicatie met de computer
+
+   pinMode(L_fwd, OUTPUT); // initaliseer de in- en uitgangen
   pinMode(L_bwd, OUTPUT);
   pinMode(R_fwd, OUTPUT);
   pinMode(R_bwd, OUTPUT);
@@ -34,6 +34,27 @@ void setup() {
   pinMode(afstand_trig, OUTPUT);
   pinMode(afstand_echo, INPUT);
 
+
+  Serial.println();
+  Serial.print("5..."); // begin een timer zodat de robot niet direct weg rijdt
+  analogWrite(LED, 255);
+  delay(1000);
+  Serial.print("4...");
+  analogWrite(LED, 0);
+  delay(1000);
+  analogWrite(LED, 255);
+  Serial.print("3...");
+  delay(1000);
+  analogWrite(LED, 0);
+  Serial.print("2...");
+  delay(1000);
+  analogWrite(LED, 255);
+  Serial.println("1...");
+  delay(1000);
+  analogWrite(LED, 127);
+  delay(100);
+  
+ 
 }
 
 float detect_distance() {
@@ -65,12 +86,13 @@ void loop() {
     analogWrite(L_bwd, turn_speed_bwd);
     analogWrite(R_bwd, 0);
     analogWrite(LED, 255);
+    delay(1000); // zodat de robot gegarandeerd een grotere hoek heeft gedraaid
   }
   else {
     analogWrite(L_fwd, roam_speed);
     analogWrite(R_fwd, roam_speed);
     analogWrite(L_bwd, 0);
     analogWrite(R_bwd, 0);
-    analogWrite(LED, roam_speed);
+    analogWrite(LED, 0);
   }
 }
