@@ -15,7 +15,7 @@ const int afstand_trig =3;
 // other settings
 const int serial_speed =9600;
 const int detection_distance =10;
-const int turn_time = 1000;
+const int turn_time =1000;
 
 
 
