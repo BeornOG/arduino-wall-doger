@@ -1,6 +1,6 @@
-// speed settings
-const int turn_speed_fwd =255;
-const int turn_speed_bwd =250;
+//// speed settings
+const int turn_speed_fwd =200;
+const int turn_speed_bwd =200;
 const int roam_speed =150;
 
 // hardware links
@@ -15,12 +15,14 @@ const int afstand_trig =3;
 // other settings
 const int serial_speed =9600;
 const int detection_distance =10;
-
+const int turn_time = 1000;
 
 
 
 // varable delcaration
  float distance;
+ bool turning;
+ bool forward;
 
 void setup() {
   // put your setup code here, to run once:
@@ -81,14 +83,16 @@ void loop() {
   Serial.println(distance);
   
   if(distance < detection_distance) {
+    forward = false;
     analogWrite(L_fwd, 0);
     analogWrite(R_fwd, turn_speed_fwd);
     analogWrite(L_bwd, turn_speed_bwd);
     analogWrite(R_bwd, 0);
     analogWrite(LED, 255);
-    delay(1000); // zodat de robot gegarandeerd een grotere hoek heeft gedraaid
+    delay(turn_time); // zodat de robot gegarandeerd een grotere hoek heeft gedraaid
   }
   else {
+    
     analogWrite(L_fwd, roam_speed);
     analogWrite(R_fwd, roam_speed);
     analogWrite(L_bwd, 0);
