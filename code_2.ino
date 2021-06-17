@@ -24,7 +24,8 @@ bool turning;
 bool forward;
 
 void writePlusShow(int timer, int color){
-    Serial.print("" + timer + "...");
+    Serial.print(timer);
+    Serial.println("...");
     analogWrite(LED, color);
     delay(1000);
 }
